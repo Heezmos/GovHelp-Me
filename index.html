@@ -1,0 +1,827 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>GovHelp AI - Sierra Leone Government Services Portal</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background: #f5f7fa;
+            color: #333;
+        }
+
+        /* Header & Navigation */
+        .header {
+            background: linear-gradient(135deg, #1e3c72 0%, #2a5298 100%);
+            color: white;
+            padding: 0;
+            box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+            position: sticky;
+            top: 0;
+            z-index: 1000;
+        }
+
+        .top-bar {
+            background: rgba(0,0,0,0.2);
+            padding: 8px 0;
+            font-size: 13px;
+        }
+
+        .top-bar .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 0 20px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .nav-container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 20px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .logo {
+            display: flex;
+            align-items: center;
+            gap: 15px;
+        }
+
+        .logo-icon {
+            font-size: 36px;
+        }
+
+        .logo-text h1 {
+            font-size: 28px;
+            font-weight: 700;
+        }
+
+        .logo-text p {
+            font-size: 14px;
+            opacity: 0.9;
+        }
+
+        .nav-menu {
+            display: flex;
+            gap: 30px;
+            list-style: none;
+        }
+
+        .nav-menu a {
+            color: white;
+            text-decoration: none;
+            font-weight: 500;
+            transition: opacity 0.3s;
+            padding: 8px 0;
+            border-bottom: 2px solid transparent;
+        }
+
+        .nav-menu a:hover, .nav-menu a.active {
+            opacity: 0.8;
+            border-bottom-color: white;
+        }
+
+        /* Hero Section */
+        .hero {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: white;
+            padding: 60px 20px;
+            text-align: center;
+        }
+
+        .hero h2 {
+            font-size: 42px;
+            margin-bottom: 20px;
+            font-weight: 700;
+        }
+
+        .hero p {
+            font-size: 18px;
+            max-width: 700px;
+            margin: 0 auto 30px;
+            opacity: 0.95;
+            line-height: 1.6;
+        }
+
+        .cta-button {
+            background: white;
+            color: #764ba2;
+            padding: 15px 40px;
+            border-radius: 50px;
+            text-decoration: none;
+            font-weight: 600;
+            display: inline-block;
+            transition: transform 0.3s, box-shadow 0.3s;
+            box-shadow: 0 4px 15px rgba(0,0,0,0.2);
+        }
+
+        .cta-button:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 6px 20px rgba(0,0,0,0.3);
+        }
+
+        /* Main Content */
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 40px 20px;
+        }
+
+        .section {
+            display: none;
+        }
+
+        .section.active {
+            display: block;
+        }
+
+        .section-title {
+            font-size: 32px;
+            margin-bottom: 30px;
+            color: #1e3c72;
+            border-bottom: 3px solid #764ba2;
+            padding-bottom: 10px;
+        }
+
+        /* Services Grid */
+        .services-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+            gap: 25px;
+            margin-top: 30px;
+        }
+
+        .service-card {
+            background: white;
+            border-radius: 15px;
+            padding: 30px;
+            box-shadow: 0 4px 15px rgba(0,0,0,0.08);
+            transition: transform 0.3s, box-shadow 0.3s;
+            cursor: pointer;
+            border: 2px solid transparent;
+        }
+
+        .service-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 8px 25px rgba(0,0,0,0.15);
+            border-color: #764ba2;
+        }
+
+        .service-icon {
+            font-size: 48px;
+            margin-bottom: 15px;
+        }
+
+        .service-card h3 {
+            font-size: 22px;
+            margin-bottom: 10px;
+            color: #1e3c72;
+        }
+
+        .service-card p {
+            color: #666;
+            line-height: 1.6;
+        }
+
+        /* Chatbot Section */
+        .chatbot-section {
+            background: white;
+            border-radius: 20px;
+            box-shadow: 0 10px 40px rgba(0,0,0,0.1);
+            overflow: hidden;
+            max-width: 900px;
+            margin: 40px auto;
+        }
+
+        .chat-header {
+            background: linear-gradient(90deg, #4CAF50, #45a049);
+            color: white;
+            padding: 25px;
+            text-align: center;
+        }
+
+        .chat-header h2 {
+            font-size: 26px;
+            margin-bottom: 5px;
+        }
+
+        .chat-messages {
+            height: 500px;
+            padding: 25px;
+            overflow-y: auto;
+            background: #f8f9fa;
+            display: flex;
+            flex-direction: column;
+            gap: 15px;
+        }
+
+        .message {
+            max-width: 80%;
+            padding: 12px 16px;
+            border-radius: 18px;
+            font-size: 14px;
+            line-height: 1.5;
+            animation: slideIn 0.3s ease-out;
+        }
+
+        @keyframes slideIn {
+            from {
+                opacity: 0;
+                transform: translateY(10px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        .bot-message {
+            background: #e3f2fd;
+            color: #1565c0;
+            align-self: flex-start;
+            border-bottom-left-radius: 4px;
+        }
+
+        .user-message {
+            background: #4CAF50;
+            color: white;
+            align-self: flex-end;
+            border-bottom-right-radius: 4px;
+        }
+
+        .service-suggestions {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 8px;
+            margin-top: 12px;
+        }
+
+        .suggestion-chip {
+            background: #f0f0f0;
+            color: #555;
+            padding: 6px 14px;
+            border-radius: 15px;
+            font-size: 12px;
+            cursor: pointer;
+            transition: all 0.3s;
+            border: 1px solid #e0e0e0;
+        }
+
+        .suggestion-chip:hover {
+            background: #4CAF50;
+            color: white;
+            border-color: #4CAF50;
+        }
+
+        .typing-indicator {
+            display: none;
+            align-self: flex-start;
+            background: #e3f2fd;
+            padding: 12px 16px;
+            border-radius: 18px;
+            border-bottom-left-radius: 4px;
+        }
+
+        .typing-dots {
+            display: flex;
+            gap: 4px;
+        }
+
+        .dot {
+            width: 8px;
+            height: 8px;
+            background: #1565c0;
+            border-radius: 50%;
+            animation: typing 1.4s infinite;
+        }
+
+        .dot:nth-child(2) { animation-delay: 0.2s; }
+        .dot:nth-child(3) { animation-delay: 0.4s; }
+
+        @keyframes typing {
+            0%, 60%, 100% {
+                transform: translateY(0);
+                opacity: 0.4;
+            }
+            30% {
+                transform: translateY(-10px);
+                opacity: 1;
+            }
+        }
+
+        .chat-input-container {
+            padding: 20px;
+            background: white;
+            border-top: 1px solid #e0e0e0;
+            display: flex;
+            gap: 12px;
+            align-items: center;
+        }
+
+        .chat-input {
+            flex: 1;
+            padding: 14px 18px;
+            border: 2px solid #e0e0e0;
+            border-radius: 25px;
+            font-size: 14px;
+            outline: none;
+            transition: border-color 0.3s;
+        }
+
+        .chat-input:focus {
+            border-color: #4CAF50;
+        }
+
+        .send-button {
+            background: #4CAF50;
+            color: white;
+            border: none;
+            border-radius: 50%;
+            width: 50px;
+            height: 50px;
+            cursor: pointer;
+            transition: all 0.3s;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 18px;
+        }
+
+        .send-button:hover {
+            background: #45a049;
+            transform: scale(1.05);
+        }
+
+        .send-button:disabled {
+            background: #ccc;
+            cursor: not-allowed;
+            transform: none;
+        }
+
+        /* Footer */
+        .footer {
+            background: #1e3c72;
+            color: white;
+            padding: 40px 20px 20px;
+            margin-top: 60px;
+        }
+
+        .footer-content {
+            max-width: 1200px;
+            margin: 0 auto;
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 40px;
+            margin-bottom: 30px;
+        }
+
+        .footer-section h3 {
+            margin-bottom: 15px;
+            font-size: 18px;
+        }
+
+        .footer-section ul {
+            list-style: none;
+        }
+
+        .footer-section ul li {
+            margin-bottom: 10px;
+        }
+
+        .footer-section a {
+            color: rgba(255,255,255,0.8);
+            text-decoration: none;
+            transition: color 0.3s;
+        }
+
+        .footer-section a:hover {
+            color: white;
+        }
+
+        .footer-bottom {
+            text-align: center;
+            padding-top: 20px;
+            border-top: 1px solid rgba(255,255,255,0.1);
+            opacity: 0.8;
+        }
+
+        /* About Section */
+        .about-content {
+            background: white;
+            padding: 40px;
+            border-radius: 15px;
+            box-shadow: 0 4px 15px rgba(0,0,0,0.08);
+            line-height: 1.8;
+        }
+
+        .about-content h3 {
+            color: #1e3c72;
+            margin: 30px 0 15px;
+            font-size: 24px;
+        }
+
+        .about-content ul {
+            margin-left: 20px;
+            margin-bottom: 20px;
+        }
+
+        .about-content li {
+            margin-bottom: 10px;
+        }
+
+        /* Mobile Menu Toggle */
+        .mobile-menu-toggle {
+            display: none;
+            background: none;
+            border: none;
+            color: white;
+            font-size: 28px;
+            cursor: pointer;
+        }
+
+        @media (max-width: 768px) {
+            .nav-menu {
+                display: none;
+                position: absolute;
+                top: 100%;
+                left: 0;
+                right: 0;
+                background: #1e3c72;
+                flex-direction: column;
+                padding: 20px;
+                gap: 15px;
+            }
+
+            .nav-menu.active {
+                display: flex;
+            }
+
+            .mobile-menu-toggle {
+                display: block;
+            }
+
+            .hero h2 {
+                font-size: 32px;
+            }
+
+            .services-grid {
+                grid-template-columns: 1fr;
+            }
+
+            .chat-messages {
+                height: 400px;
+            }
+        }
+    </style>
+</head>
+<body>
+    <!-- Header -->
+    <header class="header">
+        <div class="top-bar">
+            <div class="container">
+                <div>📞 Helpline: +232 (0) 76 000 000 | ✉️ info@govhelp.sl</div>
+                <div>🇸🇱 Serving Sierra Leone</div>
+            </div>
+        </div>
+        <nav class="nav-container">
+            <div class="logo">
+                <div class="logo-icon">🏛️</div>
+                <div class="logo-text">
+                    <h1>GovHelp AI</h1>
+                    <p>Your Government Services Portal</p>
+                </div>
+            </div>
+            <button class="mobile-menu-toggle" onclick="toggleMobileMenu()">☰</button>
+            <ul class="nav-menu" id="navMenu">
+                <li><a href="#" class="active" onclick="showSection('home')">Home</a></li>
+                <li><a href="#" onclick="showSection('services')">Services</a></li>
+                <li><a href="#" onclick="showSection('chatbot')">AI Assistant</a></li>
+                <li><a href="#" onclick="showSection('about')">About</a></li>
+                <li><a href="#" onclick="showSection('contact')">Contact</a></li>
+            </ul>
+        </nav>
+    </header>
+
+    <!-- Hero Section -->
+    <section class="hero">
+        <h2>Welcome to Sierra Leone's Digital Government Portal</h2>
+        <p>Access all government services, get instant assistance, and stay informed about national updates - all in one place.</p>
+        <a href="#" class="cta-button" onclick="showSection('chatbot')">Start AI Assistant →</a>
+    </section>
+
+    <!-- Main Content -->
+    <main class="container">
+        <!-- Home Section -->
+        <section id="home" class="section active">
+            <h2 class="section-title">Our Services</h2>
+            <div class="services-grid">
+                <div class="service-card" onclick="showSection('chatbot')">
+                    <div class="service-icon">📘</div>
+                    <h3>Passport Services</h3>
+                    <p>Apply for new passports, renewals, and get processing information.</p>
+                </div>
+                <div class="service-card" onclick="showSection('chatbot')">
+                    <div class="service-icon">🚗</div>
+                    <h3>Driver's License</h3>
+                    <p>New applications, renewals, and driving test information.</p>
+                </div>
+                <div class="service-card" onclick="showSection('chatbot')">
+                    <div class="service-icon">💼</div>
+                    <h3>NASSIT Services</h3>
+                    <p>Social security registration, contributions, and benefits.</p>
+                </div>
+                <div class="service-card" onclick="showSection('chatbot')">
+                    <div class="service-icon">📄</div>
+                    <h3>Birth Certificates</h3>
+                    <p>Register births and obtain certified copies.</p>
+                </div>
+                <div class="service-card" onclick="showSection('chatbot')">
+                    <div class="service-icon">🆔</div>
+                    <h3>National ID Card</h3>
+                    <p>Apply for national identification cards and replacements.</p>
+                </div>
+                <div class="service-card" onclick="showSection('chatbot')">
+                    <div class="service-icon">📋</div>
+                    <h3>Tax Clearance</h3>
+                    <p>Obtain tax clearance certificates for individuals and businesses.</p>
+                </div>
+                <div class="service-card" onclick="showSection('chatbot')">
+                    <div class="service-icon">📰</div>
+                    <h3>Government News</h3>
+                    <p>Stay updated with latest government announcements and policies.</p>
+                </div>
+                <div class="service-card" onclick="showSection('chatbot')">
+                    <div class="service-icon">🏛️</div>
+                    <h3>Government History</h3>
+                    <p>Learn about Sierra Leone's rich governmental heritage.</p>
+                </div>
+            </div>
+        </section>
+
+        <!-- Services Section -->
+        <section id="services" class="section">
+            <h2 class="section-title">All Government Services</h2>
+            <div class="about-content">
+                <p>GovHelp AI provides comprehensive information and assistance for all major government services in Sierra Leone. Our AI-powered assistant can help you with:</p>
+                
+                <h3>🔷 Essential Documents</h3>
+                <ul>
+                    <li><strong>Passports:</strong> Applications, renewals, fees, and processing times</li>
+                    <li><strong>National ID Cards:</strong> Registration, biometric enrollment, and replacements</li>
+                    <li><strong>Birth Certificates:</strong> Registration, late applications, and certified copies</li>
+                    <li><strong>Driver's Licenses:</strong> New applications, renewals, and test scheduling</li>
+                </ul>
+
+                <h3>🔷 Government Services</h3>
+                <ul>
+                    <li><strong>NASSIT:</strong> Social security registration, contributions, and pension services</li>
+                    <li><strong>Tax Services:</strong> Tax clearance certificates and NRA information</li>
+                    <li><strong>Government News:</strong> Official announcements and policy updates</li>
+                    <li><strong>Historical Information:</strong> Sierra Leone's governmental heritage and archives</li>
+                </ul>
+
+                <h3>🔷 Why Choose GovHelp AI?</h3>
+                <ul>
+                    <li>✅ Instant answers to your government service questions</li>
+                    <li>✅ Up-to-date fees, locations, and processing times</li>
+                    <li>✅ Step-by-step guidance for applications</li>
+                    <li>✅ Available 24/7 for your convenience</li>
+                    <li>✅ Free to use for all citizens</li>
+                </ul>
+            </div>
+        </section>
+
+        <!-- Chatbot Section -->
+        <section id="chatbot" class="section">
+            <h2 class="section-title">AI Assistant</h2>
+            <div class="chatbot-section">
+                <div class="chat-header">
+                    <h2>🤖 GovHelp AI Assistant</h2>
+                    <p>Ask me anything about government services</p>
+                </div>
+                
+                <div class="chat-messages" id="chatMessages">
+                    <div class="message bot-message">
+                        Welcome to GovHelp AI! I'm your virtual assistant for all Sierra Leone government services. How can I help you today?
+                        <div class="service-suggestions">
+                            <div class="suggestion-chip" onclick="sendSuggestion('Passport application')">📘 Passport</div>
+                            <div class="suggestion-chip" onclick="sendSuggestion('NASSIT services')">💼 NASSIT</div>
+                            <div class="suggestion-chip" onclick="sendSuggestion('Driver\'s license')">🚗 Driver's License</div>
+                            <div class="suggestion-chip" onclick="sendSuggestion('Birth certificate')">📄 Birth Certificate</div>
+                            <div class="suggestion-chip" onclick="sendSuggestion('Government news')">📰 Gov News</div>
+                            <div class="suggestion-chip" onclick="sendSuggestion('Government history')">🏛️ Gov History</div>
+                        </div>
+                    </div>
+                    
+                    <div class="typing-indicator" id="typingIndicator">
+                        <div class="typing-dots">
+                            <div class="dot"></div>
+                            <div class="dot"></div>
+                            <div class="dot"></div>
+                        </div>
+                    </div>
+                </div>
+                
+                <div class="chat-input-container">
+                    <input type="text" class="chat-input" id="messageInput" placeholder="Type your question here..." maxlength="500">
+                    <button class="send-button" id="sendButton" onclick="sendMessage()">➤</button>
+                </div>
+            </div>
+        </section>
+
+        <!-- About Section -->
+        <section id="about" class="section">
+            <h2 class="section-title">About GovHelp AI</h2>
+            <div class="about-content">
+                <p><strong>GovHelp AI</strong> is Sierra Leone's premier digital government services portal, designed to make accessing government information easier, faster, and more convenient for all citizens.</p>
+
+                <h3>Our Mission</h3>
+                <p>To digitize and democratize access to government services, ensuring every Sierra Leonean can easily obtain the information and services they need, regardless of their location or technical expertise.</p>
+
+                <h3>What We Offer</h3>
+                <ul>
+                    <li>AI-powered chatbot for instant answers to government service questions</li>
+                    <li>Comprehensive database of all major government services</li>
+                    <li>Up-to-date fees, locations, and processing times</li>
+                    <li>Step-by-step guides for applications and procedures</li>
+                    <li>Latest government news and policy updates</li>
+                    <li>Historical information about Sierra Leone's government</li>
+                </ul>
+
+                <h3>How It Works</h3>
+                <p>Simply ask our AI assistant any question about government services, and get instant, accurate information. Our system is powered by a comprehensive database of verified government information, updated regularly to ensure accuracy.</p>
+
+                <h3>Technology</h3>
+                <p>GovHelp AI uses advanced artificial intelligence and natural language processing to understand your questions and provide relevant, helpful responses. The system learns and improves with each interaction, ensuring better service over time.</p>
+
+                <h3>Privacy & Security</h3>
+                <p>We take your privacy seriously. GovHelp AI does not collect personal information beyond what's necessary to provide the service. All interactions are encrypted and secure.</p>
+            </div>
+        </section>
+
+        <!-- Contact Section -->
+        <section id="contact" class="section">
+            <h2 class="section-title">Contact Us</h2>
+            <div class="about-content">
+                <h3>Get in Touch</h3>
+                <p>Have questions, suggestions, or feedback? We'd love to hear from you!</p>
+
+                <h3>📞 Contact Information</h3>
+                <ul>
+                    <li><strong>Helpline:</strong> +232 (0) 76 000 000</li>
+                    <li><strong>Email:</strong> info@govhelp.sl</li>
+                    <li><strong>Support Email:</strong> support@govhelp.sl</li>
+                    <li><strong>Office Hours:</strong> Monday - Friday, 8:00 AM - 5:00 PM</li>
+                </ul>
+
+                <h3>🏢 Physical Address</h3>
+                <p>
+                    GovHelp AI Office<br>
+                    Tower Hill, Freetown<br>
+                    Sierra Leone
+                </p>
+
+                <h3>🌐 Follow Us</h3>
+                <ul>
+                    <li><strong>Website:</strong> www.govhelp.sl</li>
+                    <li><strong>Facebook:</strong> @GovHelpSL</li>
+                    <li><strong>Twitter:</strong> @GovHelpSL</li>
+                    <li><strong>WhatsApp:</strong> +232 76 000 000</li>
+                </ul>
+
+                <h3>💬 Feedback</h3>
+                <p>Your feedback helps us improve our services. Please share your experience and suggestions with us at feedback@govhelp.sl</p>
+
+                <h3>🚨 Report Issues</h3>
+                <p>If you encounter any technical issues or incorrect information, please report them immediately at issues@govhelp.sl</p>
+            </div>
+        </section>
+    </main>
+
+    <!-- Footer -->
+    <footer class="footer">
+        <div class="footer-content">
+            <div class="footer-section">
+                <h3>About GovHelp AI</h3>
+                <p>Sierra Leone's premier digital government services portal, making government information accessible to all citizens.</p>
+            </div>
+            <div class="footer-section">
+                <h3>Quick Links</h3>
+                <ul>
+                    <li><a href="#" onclick="showSection('home')">Home</a></li>
+                    <li><a href="#" onclick="showSection('services')">Services</a></li>
+                    <li><a href="#" onclick="showSection('chatbot')">AI Assistant</a></li>
+                    <li><a href="#" onclick="showSection('about')">About Us</a></li>
+                </ul>
+            </div>
+            <div class="footer-section">
+                <h3>Services</h3>
+                <ul>
+                    <li><a href="#" onclick="showSection('chatbot')">Passport Services</a></li>
+                    <li><a href="#" onclick="showSection('chatbot')">Driver's License</a></li>
+                    <li><a href="#" onclick="showSection('chatbot')">NASSIT</a></li>
+                    <li><a href="#" onclick="showSection('chatbot')">Birth Certificates</a></li>
+                </ul>
+            </div>
+            <div class="footer-section">
+                <h3>Contact</h3>
+                <ul>
+                    <li>📞 +232 (0) 76 000 000</li>
+                    <li>✉️ info@govhelp.sl</li>
+                    <li>📍 Tower Hill, Freetown</li>
+                    <li>🇸🇱 Sierra Leone</li>
+                </ul>
+            </div>
+        </div>
+        <div class="footer-bottom">
+            <p>&copy; 2025 GovHelp AI. All rights reserved. | Serving the people of Sierra Leone</p>
+        </div>
+    </footer>
+
+    <script>
+        let servicesData = {};
+        const messageInput = document.getElementById('messageInput');
+        const sendButton = document.getElementById('sendButton');
+        const chatMessages = document.getElementById('chatMessages');
+        const typingIndicator = document.getElementById('typingIndicator');
+
+        // Navigation Functions
+        function showSection(sectionId) {
+            // Hide all sections
+            document.querySelectorAll('.section').forEach(section => {
+                section.classList.remove('active');
+            });
+            
+            // Show selected section
+            document.getElementById(sectionId).classList.add('active');
+            
+            // Update nav active state
+            document.querySelectorAll('.nav-menu a').forEach(link => {
+                link.classList.remove('active');
+            });
+            event.target.classList.add('active');
+            
+            // Close mobile menu
+            document.getElementById('navMenu').classList.remove('active');
+            
+            // Scroll to top
+            window.scrollTo({ top: 0, behavior: 'smooth' });
+        }
+
+        function toggleMobileMenu() {
+            document.getElementById('navMenu').classList.toggle('active');
+        }
+
+        // Load service data
+        async function loadServiceData() {
+            servicesData = {
+                "passport": {
+                    "title": "Passport Services",
+                    "emoji": "📘",
+                    "location": ["Tower Hill, Freetown", "Bo Regional Office", "Kenema Regional Office", "Makeni Regional Office"],
+                    "documents": ["National ID", "Birth Certificate", "2 Passport Photos", "Completed Application Form"],
+                    "fees": { "32-page": "NLe 200", "64-page": "NLe 250" },
+                    "processing": { "regular": "7–14 days", "express": "3–5 days" },
+                    "tips": "Apply early in the day to avoid long queues.",
+                    "contact": "Immigration Department",
+                    "steps": [
+                        "Visit the Immigration Office at your preferred location",
+                        "Submit required documents and completed application form",
+                        "Pay applicable fees based on passport type",
+                        "Collect receipt and await processing"
+                    ],
+                    "keywords": ["passport", "travel", "immigration", "document", "visa"]
+                },
+                "drivers_license": {
+                    "title": "Driver's License",
+                    "emoji": "🚗",
+                    "location": ["SLRSA Office, Freetown", "Regional SLRSA Centers"],
+                    "documents": ["National ID", "Eye Test Certificate", "Driving School Certificate", "Medical Certificate"],
+                    "fees": { "new": "NLe 350", "renewal": "NLe 200" },
+                    "processing": { "regular": "5–10 business days" },
+                    "tips": "Book your driving test in advance via the SLRSA portal.",
+                    "contact": "Sierra Leone Road Safety Authority (SLRSA)",
+                    "steps": [
+                        "Complete driving school training and obtain certificate",
+                        "Pass written and practical driving tests",
+                        "Submit all required documents to SLRSA office",
+                        "Pay applicable fees and await license processing"
+                    ],
+                    "keywords": ["driver", "license", "driving", "slrsa", "vehicle", "car"]
+                },
+                "nassit": {
+                    "title": "NASSIT Services",
+                    "emoji": "💼",
+                    "location": ["NASSIT Headquarters, Brookfields", "Regional NASSIT Offices"],
+                    "documents": ["Employment Letter", "Valid National ID", "Passport Photo", "Form N1 (by
