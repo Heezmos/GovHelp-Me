@@ -1,3 +1,4 @@
+
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -15,6 +16,7 @@
             font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
             background: #f5f7fa;
             color: #333;
+            overflow-x: hidden;
         }
 
         /* Header & Navigation */
@@ -30,7 +32,7 @@
 
         .top-bar {
             background: rgba(0,0,0,0.2);
-            padding: 8px 0;
+            padding: 10px 0;
             font-size: 13px;
         }
 
@@ -56,6 +58,7 @@
             display: flex;
             align-items: center;
             gap: 15px;
+            cursor: pointer;
         }
 
         .logo-icon {
@@ -82,9 +85,10 @@
             color: white;
             text-decoration: none;
             font-weight: 500;
-            transition: opacity 0.3s;
+            transition: all 0.3s;
             padding: 8px 0;
             border-bottom: 2px solid transparent;
+            cursor: pointer;
         }
 
         .nav-menu a:hover, .nav-menu a.active {
@@ -92,106 +96,164 @@
             border-bottom-color: white;
         }
 
+        .mobile-menu-toggle {
+            display: none;
+            background: none;
+            border: none;
+            color: white;
+            font-size: 28px;
+            cursor: pointer;
+        }
+
         /* Hero Section */
         .hero {
             background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
             color: white;
-            padding: 60px 20px;
+            padding: 80px 20px;
             text-align: center;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .hero::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background: url('data:image/svg+xml,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1440 320"><path fill="rgba(255,255,255,0.1)" d="M0,96L48,112C96,128,192,160,288,160C384,160,480,128,576,112C672,96,768,96,864,112C960,128,1056,160,1152,160C1248,160,1344,128,1392,112L1440,96L1440,320L1392,320C1344,320,1248,320,1152,320C1056,320,960,320,864,320C768,320,672,320,576,320C480,320,384,320,288,320C192,320,96,320,48,320L0,320Z"></path></svg>') bottom center no-repeat;
+            opacity: 0.3;
         }
 
         .hero h2 {
-            font-size: 42px;
+            font-size: 48px;
             margin-bottom: 20px;
             font-weight: 700;
+            position: relative;
+            z-index: 1;
         }
 
         .hero p {
-            font-size: 18px;
+            font-size: 20px;
             max-width: 700px;
             margin: 0 auto 30px;
             opacity: 0.95;
             line-height: 1.6;
+            position: relative;
+            z-index: 1;
         }
 
         .cta-button {
             background: white;
             color: #764ba2;
-            padding: 15px 40px;
+            padding: 16px 45px;
             border-radius: 50px;
             text-decoration: none;
             font-weight: 600;
             display: inline-block;
             transition: transform 0.3s, box-shadow 0.3s;
             box-shadow: 0 4px 15px rgba(0,0,0,0.2);
+            cursor: pointer;
+            border: none;
+            font-size: 16px;
+            position: relative;
+            z-index: 1;
         }
 
         .cta-button:hover {
-            transform: translateY(-2px);
-            box-shadow: 0 6px 20px rgba(0,0,0,0.3);
+            transform: translateY(-3px);
+            box-shadow: 0 6px 25px rgba(0,0,0,0.3);
         }
 
         /* Main Content */
         .container {
             max-width: 1200px;
             margin: 0 auto;
-            padding: 40px 20px;
+            padding: 50px 20px;
         }
 
         .section {
             display: none;
+            animation: fadeIn 0.5s ease-in;
         }
 
         .section.active {
             display: block;
         }
 
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(20px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+
         .section-title {
-            font-size: 32px;
+            font-size: 36px;
             margin-bottom: 30px;
             color: #1e3c72;
             border-bottom: 3px solid #764ba2;
             padding-bottom: 10px;
+            display: inline-block;
         }
 
         /* Services Grid */
         .services-grid {
             display: grid;
             grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
-            gap: 25px;
-            margin-top: 30px;
+            gap: 30px;
+            margin-top: 40px;
         }
 
         .service-card {
             background: white;
             border-radius: 15px;
-            padding: 30px;
+            padding: 35px;
             box-shadow: 0 4px 15px rgba(0,0,0,0.08);
-            transition: transform 0.3s, box-shadow 0.3s;
+            transition: all 0.3s ease;
             cursor: pointer;
             border: 2px solid transparent;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .service-card::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 5px;
+            background: linear-gradient(90deg, #667eea, #764ba2);
+            transform: scaleX(0);
+            transition: transform 0.3s ease;
+        }
+
+        .service-card:hover::before {
+            transform: scaleX(1);
         }
 
         .service-card:hover {
-            transform: translateY(-5px);
-            box-shadow: 0 8px 25px rgba(0,0,0,0.15);
+            transform: translateY(-8px);
+            box-shadow: 0 12px 30px rgba(0,0,0,0.15);
             border-color: #764ba2;
         }
 
         .service-icon {
-            font-size: 48px;
-            margin-bottom: 15px;
+            font-size: 52px;
+            margin-bottom: 20px;
+            display: block;
         }
 
         .service-card h3 {
-            font-size: 22px;
-            margin-bottom: 10px;
+            font-size: 24px;
+            margin-bottom: 12px;
             color: #1e3c72;
         }
 
         .service-card p {
             color: #666;
-            line-height: 1.6;
+            line-height: 1.7;
+            font-size: 15px;
         }
 
         /* Chatbot Section */
@@ -200,45 +262,60 @@
             border-radius: 20px;
             box-shadow: 0 10px 40px rgba(0,0,0,0.1);
             overflow: hidden;
-            max-width: 900px;
+            max-width: 950px;
             margin: 40px auto;
         }
 
         .chat-header {
             background: linear-gradient(90deg, #4CAF50, #45a049);
             color: white;
-            padding: 25px;
+            padding: 30px;
             text-align: center;
         }
 
         .chat-header h2 {
-            font-size: 26px;
-            margin-bottom: 5px;
+            font-size: 28px;
+            margin-bottom: 8px;
         }
 
         .chat-messages {
-            height: 500px;
-            padding: 25px;
+            height: 550px;
+            padding: 30px;
             overflow-y: auto;
             background: #f8f9fa;
             display: flex;
             flex-direction: column;
-            gap: 15px;
+            gap: 18px;
+        }
+
+        .chat-messages::-webkit-scrollbar {
+            width: 8px;
+        }
+
+        .chat-messages::-webkit-scrollbar-track {
+            background: #f1f1f1;
+        }
+
+        .chat-messages::-webkit-scrollbar-thumb {
+            background: #888;
+            border-radius: 4px;
         }
 
         .message {
-            max-width: 80%;
-            padding: 12px 16px;
+            max-width: 85%;
+            padding: 14px 18px;
             border-radius: 18px;
-            font-size: 14px;
-            line-height: 1.5;
+            font-size: 15px;
+            line-height: 1.6;
             animation: slideIn 0.3s ease-out;
+            white-space: pre-line;
+            word-wrap: break-word;
         }
 
         @keyframes slideIn {
             from {
                 opacity: 0;
-                transform: translateY(10px);
+                transform: translateY(15px);
             }
             to {
                 opacity: 1;
@@ -263,16 +340,16 @@
         .service-suggestions {
             display: flex;
             flex-wrap: wrap;
-            gap: 8px;
-            margin-top: 12px;
+            gap: 10px;
+            margin-top: 15px;
         }
 
         .suggestion-chip {
             background: #f0f0f0;
             color: #555;
-            padding: 6px 14px;
-            border-radius: 15px;
-            font-size: 12px;
+            padding: 8px 16px;
+            border-radius: 20px;
+            font-size: 13px;
             cursor: pointer;
             transition: all 0.3s;
             border: 1px solid #e0e0e0;
@@ -282,20 +359,21 @@
             background: #4CAF50;
             color: white;
             border-color: #4CAF50;
+            transform: scale(1.05);
         }
 
         .typing-indicator {
             display: none;
             align-self: flex-start;
             background: #e3f2fd;
-            padding: 12px 16px;
+            padding: 14px 18px;
             border-radius: 18px;
             border-bottom-left-radius: 4px;
         }
 
         .typing-dots {
             display: flex;
-            gap: 4px;
+            gap: 5px;
         }
 
         .dot {
@@ -321,22 +399,23 @@
         }
 
         .chat-input-container {
-            padding: 20px;
+            padding: 25px;
             background: white;
             border-top: 1px solid #e0e0e0;
             display: flex;
-            gap: 12px;
+            gap: 15px;
             align-items: center;
         }
 
         .chat-input {
             flex: 1;
-            padding: 14px 18px;
+            padding: 16px 20px;
             border: 2px solid #e0e0e0;
-            border-radius: 25px;
-            font-size: 14px;
+            border-radius: 30px;
+            font-size: 15px;
             outline: none;
             transition: border-color 0.3s;
+            font-family: inherit;
         }
 
         .chat-input:focus {
@@ -348,19 +427,19 @@
             color: white;
             border: none;
             border-radius: 50%;
-            width: 50px;
-            height: 50px;
+            width: 55px;
+            height: 55px;
             cursor: pointer;
             transition: all 0.3s;
             display: flex;
             align-items: center;
             justify-content: center;
-            font-size: 18px;
+            font-size: 20px;
         }
 
-        .send-button:hover {
+        .send-button:hover:not(:disabled) {
             background: #45a049;
-            transform: scale(1.05);
+            transform: scale(1.1);
         }
 
         .send-button:disabled {
@@ -369,12 +448,37 @@
             transform: none;
         }
 
+        /* About Content */
+        .about-content {
+            background: white;
+            padding: 45px;
+            border-radius: 15px;
+            box-shadow: 0 4px 15px rgba(0,0,0,0.08);
+            line-height: 1.9;
+        }
+
+        .about-content h3 {
+            color: #1e3c72;
+            margin: 35px 0 18px;
+            font-size: 26px;
+        }
+
+        .about-content ul {
+            margin-left: 25px;
+            margin-bottom: 25px;
+        }
+
+        .about-content li {
+            margin-bottom: 12px;
+            color: #555;
+        }
+
         /* Footer */
         .footer {
             background: #1e3c72;
             color: white;
-            padding: 40px 20px 20px;
-            margin-top: 60px;
+            padding: 50px 20px 25px;
+            margin-top: 80px;
         }
 
         .footer-content {
@@ -382,13 +486,13 @@
             margin: 0 auto;
             display: grid;
             grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
-            gap: 40px;
-            margin-bottom: 30px;
+            gap: 45px;
+            margin-bottom: 35px;
         }
 
         .footer-section h3 {
-            margin-bottom: 15px;
-            font-size: 18px;
+            margin-bottom: 18px;
+            font-size: 20px;
         }
 
         .footer-section ul {
@@ -396,13 +500,14 @@
         }
 
         .footer-section ul li {
-            margin-bottom: 10px;
+            margin-bottom: 12px;
         }
 
         .footer-section a {
             color: rgba(255,255,255,0.8);
             text-decoration: none;
             transition: color 0.3s;
+            cursor: pointer;
         }
 
         .footer-section a:hover {
@@ -411,45 +516,12 @@
 
         .footer-bottom {
             text-align: center;
-            padding-top: 20px;
+            padding-top: 25px;
             border-top: 1px solid rgba(255,255,255,0.1);
             opacity: 0.8;
         }
 
-        /* About Section */
-        .about-content {
-            background: white;
-            padding: 40px;
-            border-radius: 15px;
-            box-shadow: 0 4px 15px rgba(0,0,0,0.08);
-            line-height: 1.8;
-        }
-
-        .about-content h3 {
-            color: #1e3c72;
-            margin: 30px 0 15px;
-            font-size: 24px;
-        }
-
-        .about-content ul {
-            margin-left: 20px;
-            margin-bottom: 20px;
-        }
-
-        .about-content li {
-            margin-bottom: 10px;
-        }
-
-        /* Mobile Menu Toggle */
-        .mobile-menu-toggle {
-            display: none;
-            background: none;
-            border: none;
-            color: white;
-            font-size: 28px;
-            cursor: pointer;
-        }
-
+        /* Responsive Design */
         @media (max-width: 768px) {
             .nav-menu {
                 display: none;
@@ -461,6 +533,7 @@
                 flex-direction: column;
                 padding: 20px;
                 gap: 15px;
+                box-shadow: 0 4px 10px rgba(0,0,0,0.2);
             }
 
             .nav-menu.active {
@@ -472,7 +545,11 @@
             }
 
             .hero h2 {
-                font-size: 32px;
+                font-size: 34px;
+            }
+
+            .hero p {
+                font-size: 16px;
             }
 
             .services-grid {
@@ -480,7 +557,22 @@
             }
 
             .chat-messages {
-                height: 400px;
+                height: 450px;
+                padding: 20px;
+            }
+
+            .top-bar .container {
+                flex-direction: column;
+                gap: 8px;
+                text-align: center;
+            }
+
+            .section-title {
+                font-size: 28px;
+            }
+
+            .about-content {
+                padding: 30px;
             }
         }
     </style>
@@ -495,7 +587,7 @@
             </div>
         </div>
         <nav class="nav-container">
-            <div class="logo">
+            <div class="logo" onclick="showSection('home')">
                 <div class="logo-icon">🏛️</div>
                 <div class="logo-text">
                     <h1>GovHelp AI</h1>
@@ -504,11 +596,11 @@
             </div>
             <button class="mobile-menu-toggle" onclick="toggleMobileMenu()">☰</button>
             <ul class="nav-menu" id="navMenu">
-                <li><a href="#" class="active" onclick="showSection('home')">Home</a></li>
-                <li><a href="#" onclick="showSection('services')">Services</a></li>
-                <li><a href="#" onclick="showSection('chatbot')">AI Assistant</a></li>
-                <li><a href="#" onclick="showSection('about')">About</a></li>
-                <li><a href="#" onclick="showSection('contact')">Contact</a></li>
+                <li><a class="active" onclick="showSection('home')">Home</a></li>
+                <li><a onclick="showSection('services')">Services</a></li>
+                <li><a onclick="showSection('chatbot')">AI Assistant</a></li>
+                <li><a onclick="showSection('about')">About</a></li>
+                <li><a onclick="showSection('contact')">Contact</a></li>
             </ul>
         </nav>
     </header>
@@ -517,7 +609,7 @@
     <section class="hero">
         <h2>Welcome to Sierra Leone's Digital Government Portal</h2>
         <p>Access all government services, get instant assistance, and stay informed about national updates - all in one place.</p>
-        <a href="#" class="cta-button" onclick="showSection('chatbot')">Start AI Assistant →</a>
+        <button class="cta-button" onclick="showSection('chatbot')">Start AI Assistant →</button>
     </section>
 
     <!-- Main Content -->
@@ -526,42 +618,42 @@
         <section id="home" class="section active">
             <h2 class="section-title">Our Services</h2>
             <div class="services-grid">
-                <div class="service-card" onclick="showSection('chatbot')">
+                <div class="service-card" onclick="openServiceChat('passport')">
                     <div class="service-icon">📘</div>
                     <h3>Passport Services</h3>
                     <p>Apply for new passports, renewals, and get processing information.</p>
                 </div>
-                <div class="service-card" onclick="showSection('chatbot')">
+                <div class="service-card" onclick="openServiceChat('drivers_license')">
                     <div class="service-icon">🚗</div>
                     <h3>Driver's License</h3>
                     <p>New applications, renewals, and driving test information.</p>
                 </div>
-                <div class="service-card" onclick="showSection('chatbot')">
+                <div class="service-card" onclick="openServiceChat('nassit')">
                     <div class="service-icon">💼</div>
                     <h3>NASSIT Services</h3>
                     <p>Social security registration, contributions, and benefits.</p>
                 </div>
-                <div class="service-card" onclick="showSection('chatbot')">
+                <div class="service-card" onclick="openServiceChat('birth_certificate')">
                     <div class="service-icon">📄</div>
                     <h3>Birth Certificates</h3>
                     <p>Register births and obtain certified copies.</p>
                 </div>
-                <div class="service-card" onclick="showSection('chatbot')">
+                <div class="service-card" onclick="openServiceChat('national_id')">
                     <div class="service-icon">🆔</div>
                     <h3>National ID Card</h3>
                     <p>Apply for national identification cards and replacements.</p>
                 </div>
-                <div class="service-card" onclick="showSection('chatbot')">
+                <div class="service-card" onclick="openServiceChat('tax_clearance')">
                     <div class="service-icon">📋</div>
                     <h3>Tax Clearance</h3>
                     <p>Obtain tax clearance certificates for individuals and businesses.</p>
                 </div>
-                <div class="service-card" onclick="showSection('chatbot')">
+                <div class="service-card" onclick="openServiceChat('government_news')">
                     <div class="service-icon">📰</div>
                     <h3>Government News</h3>
                     <p>Stay updated with latest government announcements and policies.</p>
                 </div>
-                <div class="service-card" onclick="showSection('chatbot')">
+                <div class="service-card" onclick="openServiceChat('government_history')">
                     <div class="service-icon">🏛️</div>
                     <h3>Government History</h3>
                     <p>Learn about Sierra Leone's rich governmental heritage.</p>
@@ -617,7 +709,7 @@
                         <div class="service-suggestions">
                             <div class="suggestion-chip" onclick="sendSuggestion('Passport application')">📘 Passport</div>
                             <div class="suggestion-chip" onclick="sendSuggestion('NASSIT services')">💼 NASSIT</div>
-                            <div class="suggestion-chip" onclick="sendSuggestion('Driver\'s license')">🚗 Driver's License</div>
+                            <div class="suggestion-chip" onclick="sendSuggestion('Driver license')">🚗 Driver's License</div>
                             <div class="suggestion-chip" onclick="sendSuggestion('Birth certificate')">📄 Birth Certificate</div>
                             <div class="suggestion-chip" onclick="sendSuggestion('Government news')">📰 Gov News</div>
                             <div class="suggestion-chip" onclick="sendSuggestion('Government history')">🏛️ Gov History</div>
@@ -719,19 +811,19 @@
             <div class="footer-section">
                 <h3>Quick Links</h3>
                 <ul>
-                    <li><a href="#" onclick="showSection('home')">Home</a></li>
-                    <li><a href="#" onclick="showSection('services')">Services</a></li>
-                    <li><a href="#" onclick="showSection('chatbot')">AI Assistant</a></li>
-                    <li><a href="#" onclick="showSection('about')">About Us</a></li>
+                    <li><a onclick="showSection('home')">Home</a></li>
+                    <li><a onclick="showSection('services')">Services</a></li>
+                    <li><a onclick="showSection('chatbot')">AI Assistant</a></li>
+                    <li><a onclick="showSection('about')">About Us</a></li>
                 </ul>
             </div>
             <div class="footer-section">
                 <h3>Services</h3>
                 <ul>
-                    <li><a href="#" onclick="showSection('chatbot')">Passport Services</a></li>
-                    <li><a href="#" onclick="showSection('chatbot')">Driver's License</a></li>
-                    <li><a href="#" onclick="showSection('chatbot')">NASSIT</a></li>
-                    <li><a href="#" onclick="showSection('chatbot')">Birth Certificates</a></li>
+                    <li><a onclick="openServiceChat('passport')">Passport Services</a></li>
+                    <li><a onclick="openServiceChat('drivers_license')">Driver's License</a></li>
+                    <li><a onclick="openServiceChat('nassit')">NASSIT</a></li>
+                    <li><a onclick="openServiceChat('birth_certificate')">Birth Certificates</a></li>
                 </ul>
             </div>
             <div class="footer-section">
@@ -750,78 +842,11 @@
     </footer>
 
     <script>
-        let servicesData = {};
-        const messageInput = document.getElementById('messageInput');
-        const sendButton = document.getElementById('sendButton');
-        const chatMessages = document.getElementById('chatMessages');
-        const typingIndicator = document.getElementById('typingIndicator');
-
-        // Navigation Functions
-        function showSection(sectionId) {
-            // Hide all sections
-            document.querySelectorAll('.section').forEach(section => {
-                section.classList.remove('active');
-            });
-            
-            // Show selected section
-            document.getElementById(sectionId).classList.add('active');
-            
-            // Update nav active state
-            document.querySelectorAll('.nav-menu a').forEach(link => {
-                link.classList.remove('active');
-            });
-            event.target.classList.add('active');
-            
-            // Close mobile menu
-            document.getElementById('navMenu').classList.remove('active');
-            
-            // Scroll to top
-            window.scrollTo({ top: 0, behavior: 'smooth' });
-        }
-
-        function toggleMobileMenu() {
-            document.getElementById('navMenu').classList.toggle('active');
-        }
-
-        // Load service data
-        async function loadServiceData() {
-            servicesData = {
-                "passport": {
-                    "title": "Passport Services",
-                    "emoji": "📘",
-                    "location": ["Tower Hill, Freetown", "Bo Regional Office", "Kenema Regional Office", "Makeni Regional Office"],
-                    "documents": ["National ID", "Birth Certificate", "2 Passport Photos", "Completed Application Form"],
-                    "fees": { "32-page": "NLe 200", "64-page": "NLe 250" },
-                    "processing": { "regular": "7–14 days", "express": "3–5 days" },
-                    "tips": "Apply early in the day to avoid long queues.",
-                    "contact": "Immigration Department",
-                    "steps": [
-                        "Visit the Immigration Office at your preferred location",
-                        "Submit required documents and completed application form",
-                        "Pay applicable fees based on passport type",
-                        "Collect receipt and await processing"
-                    ],
-                    "keywords": ["passport", "travel", "immigration", "document", "visa"]
-                },
-                "drivers_license": {
-                    "title": "Driver's License",
-                    "emoji": "🚗",
-                    "location": ["SLRSA Office, Freetown", "Regional SLRSA Centers"],
-                    "documents": ["National ID", "Eye Test Certificate", "Driving School Certificate", "Medical Certificate"],
-                    "fees": { "new": "NLe 350", "renewal": "NLe 200" },
-                    "processing": { "regular": "5–10 business days" },
-                    "tips": "Book your driving test in advance via the SLRSA portal.",
-                    "contact": "Sierra Leone Road Safety Authority (SLRSA)",
-                    "steps": [
-                        "Complete driving school training and obtain certificate",
-                        "Pass written and practical driving tests",
-                        "Submit all required documents to SLRSA office",
-                        "Pay applicable fees and await license processing"
-                    ],
-                    "keywords": ["driver", "license", "driving", "slrsa", "vehicle", "car"]
-                },
-                "nassit": {
-                    "title": "NASSIT Services",
-                    "emoji": "💼",
-                    "location": ["NASSIT Headquarters, Brookfields", "Regional NASSIT Offices"],
-                    "documents": ["Employment Letter", "Valid National ID", "Passport Photo", "Form N1 (by
+        // ===== COMPLETE SERVICES DATABASE =====
+        const servicesData = {
+            "passport": {
+                "title": "Passport Services",
+                "emoji": "📘",
+                "location": ["Tower Hill, Freetown", "Bo Regional Office", "Kenema Regional Office", "Makeni Regional Office"],
+                "documents": ["National ID", "Birth Certificate", "2 Passport Photos", "Completed Application Form"],
+                "fees":
