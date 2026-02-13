@@ -1,852 +1,481 @@
 
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>GovHelp AI - Sierra Leone Government Services Portal</title>
-    <style>
-        * {
-            margin: 0;
-            padding: 0;
-            box-sizing: border-box;
-        }
-
-        body {
-            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
-            background: #f5f7fa;
-            color: #333;
-            overflow-x: hidden;
-        }
-
-        /* Header & Navigation */
-        .header {
-            background: linear-gradient(135deg, #1e3c72 0%, #2a5298 100%);
-            color: white;
-            padding: 0;
-            box-shadow: 0 2px 10px rgba(0,0,0,0.1);
-            position: sticky;
-            top: 0;
-            z-index: 1000;
-        }
-
-        .top-bar {
-            background: rgba(0,0,0,0.2);
-            padding: 10px 0;
-            font-size: 13px;
-        }
-
-        .top-bar .container {
-            max-width: 1200px;
-            margin: 0 auto;
-            padding: 0 20px;
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-        }
-
-        .nav-container {
-            max-width: 1200px;
-            margin: 0 auto;
-            padding: 20px;
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-        }
-
-        .logo {
-            display: flex;
-            align-items: center;
-            gap: 15px;
-            cursor: pointer;
-        }
-
-        .logo-icon {
-            font-size: 36px;
-        }
-
-        .logo-text h1 {
-            font-size: 28px;
-            font-weight: 700;
-        }
-
-        .logo-text p {
-            font-size: 14px;
-            opacity: 0.9;
-        }
-
-        .nav-menu {
-            display: flex;
-            gap: 30px;
-            list-style: none;
-        }
-
-        .nav-menu a {
-            color: white;
-            text-decoration: none;
-            font-weight: 500;
-            transition: all 0.3s;
-            padding: 8px 0;
-            border-bottom: 2px solid transparent;
-            cursor: pointer;
-        }
-
-        .nav-menu a:hover, .nav-menu a.active {
-            opacity: 0.8;
-            border-bottom-color: white;
-        }
-
-        .mobile-menu-toggle {
-            display: none;
-            background: none;
-            border: none;
-            color: white;
-            font-size: 28px;
-            cursor: pointer;
-        }
-
-        /* Hero Section */
-        .hero {
-            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
-            color: white;
-            padding: 80px 20px;
-            text-align: center;
-            position: relative;
-            overflow: hidden;
-        }
-
-        .hero::before {
-            content: '';
-            position: absolute;
-            top: 0;
-            left: 0;
-            right: 0;
-            bottom: 0;
-            background: url('data:image/svg+xml,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1440 320"><path fill="rgba(255,255,255,0.1)" d="M0,96L48,112C96,128,192,160,288,160C384,160,480,128,576,112C672,96,768,96,864,112C960,128,1056,160,1152,160C1248,160,1344,128,1392,112L1440,96L1440,320L1392,320C1344,320,1248,320,1152,320C1056,320,960,320,864,320C768,320,672,320,576,320C480,320,384,320,288,320C192,320,96,320,48,320L0,320Z"></path></svg>') bottom center no-repeat;
-            opacity: 0.3;
-        }
-
-        .hero h2 {
-            font-size: 48px;
-            margin-bottom: 20px;
-            font-weight: 700;
-            position: relative;
-            z-index: 1;
-        }
-
-        .hero p {
-            font-size: 20px;
-            max-width: 700px;
-            margin: 0 auto 30px;
-            opacity: 0.95;
-            line-height: 1.6;
-            position: relative;
-            z-index: 1;
-        }
-
-        .cta-button {
-            background: white;
-            color: #764ba2;
-            padding: 16px 45px;
-            border-radius: 50px;
-            text-decoration: none;
-            font-weight: 600;
-            display: inline-block;
-            transition: transform 0.3s, box-shadow 0.3s;
-            box-shadow: 0 4px 15px rgba(0,0,0,0.2);
-            cursor: pointer;
-            border: none;
-            font-size: 16px;
-            position: relative;
-            z-index: 1;
-        }
-
-        .cta-button:hover {
-            transform: translateY(-3px);
-            box-shadow: 0 6px 25px rgba(0,0,0,0.3);
-        }
-
-        /* Main Content */
-        .container {
-            max-width: 1200px;
-            margin: 0 auto;
-            padding: 50px 20px;
-        }
-
-        .section {
-            display: none;
-            animation: fadeIn 0.5s ease-in;
-        }
-
-        .section.active {
-            display: block;
-        }
-
-        @keyframes fadeIn {
-            from { opacity: 0; transform: translateY(20px); }
-            to { opacity: 1; transform: translateY(0); }
-        }
-
-        .section-title {
-            font-size: 36px;
-            margin-bottom: 30px;
-            color: #1e3c72;
-            border-bottom: 3px solid #764ba2;
-            padding-bottom: 10px;
-            display: inline-block;
-        }
-
-        /* Services Grid */
-        .services-grid {
-            display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
-            gap: 30px;
-            margin-top: 40px;
-        }
-
-        .service-card {
-            background: white;
-            border-radius: 15px;
-            padding: 35px;
-            box-shadow: 0 4px 15px rgba(0,0,0,0.08);
-            transition: all 0.3s ease;
-            cursor: pointer;
-            border: 2px solid transparent;
-            position: relative;
-            overflow: hidden;
-        }
-
-        .service-card::before {
-            content: '';
-            position: absolute;
-            top: 0;
-            left: 0;
-            width: 100%;
-            height: 5px;
-            background: linear-gradient(90deg, #667eea, #764ba2);
-            transform: scaleX(0);
-            transition: transform 0.3s ease;
-        }
-
-        .service-card:hover::before {
-            transform: scaleX(1);
-        }
-
-        .service-card:hover {
-            transform: translateY(-8px);
-            box-shadow: 0 12px 30px rgba(0,0,0,0.15);
-            border-color: #764ba2;
-        }
-
-        .service-icon {
-            font-size: 52px;
-            margin-bottom: 20px;
-            display: block;
-        }
-
-        .service-card h3 {
-            font-size: 24px;
-            margin-bottom: 12px;
-            color: #1e3c72;
-        }
-
-        .service-card p {
-            color: #666;
-            line-height: 1.7;
-            font-size: 15px;
-        }
-
-        /* Chatbot Section */
-        .chatbot-section {
-            background: white;
-            border-radius: 20px;
-            box-shadow: 0 10px 40px rgba(0,0,0,0.1);
-            overflow: hidden;
-            max-width: 950px;
-            margin: 40px auto;
-        }
-
-        .chat-header {
-            background: linear-gradient(90deg, #4CAF50, #45a049);
-            color: white;
-            padding: 30px;
-            text-align: center;
-        }
-
-        .chat-header h2 {
-            font-size: 28px;
-            margin-bottom: 8px;
-        }
-
-        .chat-messages {
-            height: 550px;
-            padding: 30px;
-            overflow-y: auto;
-            background: #f8f9fa;
-            display: flex;
-            flex-direction: column;
-            gap: 18px;
-        }
-
-        .chat-messages::-webkit-scrollbar {
-            width: 8px;
-        }
-
-        .chat-messages::-webkit-scrollbar-track {
-            background: #f1f1f1;
-        }
-
-        .chat-messages::-webkit-scrollbar-thumb {
-            background: #888;
-            border-radius: 4px;
-        }
-
-        .message {
-            max-width: 85%;
-            padding: 14px 18px;
-            border-radius: 18px;
-            font-size: 15px;
-            line-height: 1.6;
-            animation: slideIn 0.3s ease-out;
-            white-space: pre-line;
-            word-wrap: break-word;
-        }
-
-        @keyframes slideIn {
-            from {
-                opacity: 0;
-                transform: translateY(15px);
-            }
-            to {
-                opacity: 1;
-                transform: translateY(0);
-            }
-        }
-
-        .bot-message {
-            background: #e3f2fd;
-            color: #1565c0;
-            align-self: flex-start;
-            border-bottom-left-radius: 4px;
-        }
-
-        .user-message {
-            background: #4CAF50;
-            color: white;
-            align-self: flex-end;
-            border-bottom-right-radius: 4px;
-        }
-
-        .service-suggestions {
-            display: flex;
-            flex-wrap: wrap;
-            gap: 10px;
-            margin-top: 15px;
-        }
-
-        .suggestion-chip {
-            background: #f0f0f0;
-            color: #555;
-            padding: 8px 16px;
-            border-radius: 20px;
-            font-size: 13px;
-            cursor: pointer;
-            transition: all 0.3s;
-            border: 1px solid #e0e0e0;
-        }
-
-        .suggestion-chip:hover {
-            background: #4CAF50;
-            color: white;
-            border-color: #4CAF50;
-            transform: scale(1.05);
-        }
-
-        .typing-indicator {
-            display: none;
-            align-self: flex-start;
-            background: #e3f2fd;
-            padding: 14px 18px;
-            border-radius: 18px;
-            border-bottom-left-radius: 4px;
-        }
-
-        .typing-dots {
-            display: flex;
-            gap: 5px;
-        }
-
-        .dot {
-            width: 8px;
-            height: 8px;
-            background: #1565c0;
-            border-radius: 50%;
-            animation: typing 1.4s infinite;
-        }
-
-        .dot:nth-child(2) { animation-delay: 0.2s; }
-        .dot:nth-child(3) { animation-delay: 0.4s; }
-
-        @keyframes typing {
-            0%, 60%, 100% {
-                transform: translateY(0);
-                opacity: 0.4;
-            }
-            30% {
-                transform: translateY(-10px);
-                opacity: 1;
-            }
-        }
-
-        .chat-input-container {
-            padding: 25px;
-            background: white;
-            border-top: 1px solid #e0e0e0;
-            display: flex;
-            gap: 15px;
-            align-items: center;
-        }
-
-        .chat-input {
-            flex: 1;
-            padding: 16px 20px;
-            border: 2px solid #e0e0e0;
-            border-radius: 30px;
-            font-size: 15px;
-            outline: none;
-            transition: border-color 0.3s;
-            font-family: inherit;
-        }
-
-        .chat-input:focus {
-            border-color: #4CAF50;
-        }
-
-        .send-button {
-            background: #4CAF50;
-            color: white;
-            border: none;
-            border-radius: 50%;
-            width: 55px;
-            height: 55px;
-            cursor: pointer;
-            transition: all 0.3s;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            font-size: 20px;
-        }
-
-        .send-button:hover:not(:disabled) {
-            background: #45a049;
-            transform: scale(1.1);
-        }
-
-        .send-button:disabled {
-            background: #ccc;
-            cursor: not-allowed;
-            transform: none;
-        }
-
-        /* About Content */
-        .about-content {
-            background: white;
-            padding: 45px;
-            border-radius: 15px;
-            box-shadow: 0 4px 15px rgba(0,0,0,0.08);
-            line-height: 1.9;
-        }
-
-        .about-content h3 {
-            color: #1e3c72;
-            margin: 35px 0 18px;
-            font-size: 26px;
-        }
-
-        .about-content ul {
-            margin-left: 25px;
-            margin-bottom: 25px;
-        }
-
-        .about-content li {
-            margin-bottom: 12px;
-            color: #555;
-        }
-
-        /* Footer */
-        .footer {
-            background: #1e3c72;
-            color: white;
-            padding: 50px 20px 25px;
-            margin-top: 80px;
-        }
-
-        .footer-content {
-            max-width: 1200px;
-            margin: 0 auto;
-            display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
-            gap: 45px;
-            margin-bottom: 35px;
-        }
-
-        .footer-section h3 {
-            margin-bottom: 18px;
-            font-size: 20px;
-        }
-
-        .footer-section ul {
-            list-style: none;
-        }
-
-        .footer-section ul li {
-            margin-bottom: 12px;
-        }
-
-        .footer-section a {
-            color: rgba(255,255,255,0.8);
-            text-decoration: none;
-            transition: color 0.3s;
-            cursor: pointer;
-        }
-
-        .footer-section a:hover {
-            color: white;
-        }
-
-        .footer-bottom {
-            text-align: center;
-            padding-top: 25px;
-            border-top: 1px solid rgba(255,255,255,0.1);
-            opacity: 0.8;
-        }
-
-        /* Responsive Design */
-        @media (max-width: 768px) {
-            .nav-menu {
-                display: none;
-                position: absolute;
-                top: 100%;
-                left: 0;
-                right: 0;
-                background: #1e3c72;
-                flex-direction: column;
-                padding: 20px;
-                gap: 15px;
-                box-shadow: 0 4px 10px rgba(0,0,0,0.2);
-            }
-
-            .nav-menu.active {
-                display: flex;
-            }
-
-            .mobile-menu-toggle {
-                display: block;
-            }
-
-            .hero h2 {
-                font-size: 34px;
-            }
-
-            .hero p {
-                font-size: 16px;
-            }
-
-            .services-grid {
-                grid-template-columns: 1fr;
-            }
-
-            .chat-messages {
-                height: 450px;
-                padding: 20px;
-            }
-
-            .top-bar .container {
-                flex-direction: column;
-                gap: 8px;
-                text-align: center;
-            }
-
-            .section-title {
-                font-size: 28px;
-            }
-
-            .about-content {
-                padding: 30px;
-            }
-        }
-    </style>
-</head>
-<body>
-    <!-- Header -->
-    <header class="header">
-        <div class="top-bar">
-            <div class="container">
-                <div>📞 Helpline: +232 (0) 76 000 000 | ✉️ info@govhelp.sl</div>
-                <div>🇸🇱 Serving Sierra Leone</div>
-            </div>
-        </div>
-        <nav class="nav-container">
-            <div class="logo" onclick="showSection('home')">
-                <div class="logo-icon">🏛️</div>
-                <div class="logo-text">
-                    <h1>GovHelp AI</h1>
-                    <p>Your Government Services Portal</p>
-                </div>
-            </div>
-            <button class="mobile-menu-toggle" onclick="toggleMobileMenu()">☰</button>
-            <ul class="nav-menu" id="navMenu">
-                <li><a class="active" onclick="showSection('home')">Home</a></li>
-                <li><a onclick="showSection('services')">Services</a></li>
-                <li><a onclick="showSection('chatbot')">AI Assistant</a></li>
-                <li><a onclick="showSection('about')">About</a></li>
-                <li><a onclick="showSection('contact')">Contact</a></li>
-            </ul>
-        </nav>
-    </header>
-
-    <!-- Hero Section -->
-    <section class="hero">
-        <h2>Welcome to Sierra Leone's Digital Government Portal</h2>
-        <p>Access all government services, get instant assistance, and stay informed about national updates - all in one place.</p>
-        <button class="cta-button" onclick="showSection('chatbot')">Start AI Assistant →</button>
-    </section>
-
-    <!-- Main Content -->
-    <main class="container">
-        <!-- Home Section -->
-        <section id="home" class="section active">
-            <h2 class="section-title">Our Services</h2>
-            <div class="services-grid">
-                <div class="service-card" onclick="openServiceChat('passport')">
-                    <div class="service-icon">📘</div>
-                    <h3>Passport Services</h3>
-                    <p>Apply for new passports, renewals, and get processing information.</p>
-                </div>
-                <div class="service-card" onclick="openServiceChat('drivers_license')">
-                    <div class="service-icon">🚗</div>
-                    <h3>Driver's License</h3>
-                    <p>New applications, renewals, and driving test information.</p>
-                </div>
-                <div class="service-card" onclick="openServiceChat('nassit')">
-                    <div class="service-icon">💼</div>
-                    <h3>NASSIT Services</h3>
-                    <p>Social security registration, contributions, and benefits.</p>
-                </div>
-                <div class="service-card" onclick="openServiceChat('birth_certificate')">
-                    <div class="service-icon">📄</div>
-                    <h3>Birth Certificates</h3>
-                    <p>Register births and obtain certified copies.</p>
-                </div>
-                <div class="service-card" onclick="openServiceChat('national_id')">
-                    <div class="service-icon">🆔</div>
-                    <h3>National ID Card</h3>
-                    <p>Apply for national identification cards and replacements.</p>
-                </div>
-                <div class="service-card" onclick="openServiceChat('tax_clearance')">
-                    <div class="service-icon">📋</div>
-                    <h3>Tax Clearance</h3>
-                    <p>Obtain tax clearance certificates for individuals and businesses.</p>
-                </div>
-                <div class="service-card" onclick="openServiceChat('government_news')">
-                    <div class="service-icon">📰</div>
-                    <h3>Government News</h3>
-                    <p>Stay updated with latest government announcements and policies.</p>
-                </div>
-                <div class="service-card" onclick="openServiceChat('government_history')">
-                    <div class="service-icon">🏛️</div>
-                    <h3>Government History</h3>
-                    <p>Learn about Sierra Leone's rich governmental heritage.</p>
-                </div>
-            </div>
-        </section>
-
-        <!-- Services Section -->
-        <section id="services" class="section">
-            <h2 class="section-title">All Government Services</h2>
-            <div class="about-content">
-                <p>GovHelp AI provides comprehensive information and assistance for all major government services in Sierra Leone. Our AI-powered assistant can help you with:</p>
-                
-                <h3>🔷 Essential Documents</h3>
-                <ul>
-                    <li><strong>Passports:</strong> Applications, renewals, fees, and processing times</li>
-                    <li><strong>National ID Cards:</strong> Registration, biometric enrollment, and replacements</li>
-                    <li><strong>Birth Certificates:</strong> Registration, late applications, and certified copies</li>
-                    <li><strong>Driver's Licenses:</strong> New applications, renewals, and test scheduling</li>
-                </ul>
-
-                <h3>🔷 Government Services</h3>
-                <ul>
-                    <li><strong>NASSIT:</strong> Social security registration, contributions, and pension services</li>
-                    <li><strong>Tax Services:</strong> Tax clearance certificates and NRA information</li>
-                    <li><strong>Government News:</strong> Official announcements and policy updates</li>
-                    <li><strong>Historical Information:</strong> Sierra Leone's governmental heritage and archives</li>
-                </ul>
-
-                <h3>🔷 Why Choose GovHelp AI?</h3>
-                <ul>
-                    <li>✅ Instant answers to your government service questions</li>
-                    <li>✅ Up-to-date fees, locations, and processing times</li>
-                    <li>✅ Step-by-step guidance for applications</li>
-                    <li>✅ Available 24/7 for your convenience</li>
-                    <li>✅ Free to use for all citizens</li>
-                </ul>
-            </div>
-        </section>
-
-        <!-- Chatbot Section -->
-        <section id="chatbot" class="section">
-            <h2 class="section-title">AI Assistant</h2>
-            <div class="chatbot-section">
-                <div class="chat-header">
-                    <h2>🤖 GovHelp AI Assistant</h2>
-                    <p>Ask me anything about government services</p>
-                </div>
-                
-                <div class="chat-messages" id="chatMessages">
-                    <div class="message bot-message">
-                        Welcome to GovHelp AI! I'm your virtual assistant for all Sierra Leone government services. How can I help you today?
-                        <div class="service-suggestions">
-                            <div class="suggestion-chip" onclick="sendSuggestion('Passport application')">📘 Passport</div>
-                            <div class="suggestion-chip" onclick="sendSuggestion('NASSIT services')">💼 NASSIT</div>
-                            <div class="suggestion-chip" onclick="sendSuggestion('Driver license')">🚗 Driver's License</div>
-                            <div class="suggestion-chip" onclick="sendSuggestion('Birth certificate')">📄 Birth Certificate</div>
-                            <div class="suggestion-chip" onclick="sendSuggestion('Government news')">📰 Gov News</div>
-                            <div class="suggestion-chip" onclick="sendSuggestion('Government history')">🏛️ Gov History</div>
-                        </div>
-                    </div>
-                    
-                    <div class="typing-indicator" id="typingIndicator">
-                        <div class="typing-dots">
-                            <div class="dot"></div>
-                            <div class="dot"></div>
-                            <div class="dot"></div>
-                        </div>
-                    </div>
-                </div>
-                
-                <div class="chat-input-container">
-                    <input type="text" class="chat-input" id="messageInput" placeholder="Type your question here..." maxlength="500">
-                    <button class="send-button" id="sendButton" onclick="sendMessage()">➤</button>
-                </div>
-            </div>
-        </section>
-
-        <!-- About Section -->
-        <section id="about" class="section">
-            <h2 class="section-title">About GovHelp AI</h2>
-            <div class="about-content">
-                <p><strong>GovHelp AI</strong> is Sierra Leone's premier digital government services portal, designed to make accessing government information easier, faster, and more convenient for all citizens.</p>
-
-                <h3>Our Mission</h3>
-                <p>To digitize and democratize access to government services, ensuring every Sierra Leonean can easily obtain the information and services they need, regardless of their location or technical expertise.</p>
-
-                <h3>What We Offer</h3>
-                <ul>
-                    <li>AI-powered chatbot for instant answers to government service questions</li>
-                    <li>Comprehensive database of all major government services</li>
-                    <li>Up-to-date fees, locations, and processing times</li>
-                    <li>Step-by-step guides for applications and procedures</li>
-                    <li>Latest government news and policy updates</li>
-                    <li>Historical information about Sierra Leone's government</li>
-                </ul>
-
-                <h3>How It Works</h3>
-                <p>Simply ask our AI assistant any question about government services, and get instant, accurate information. Our system is powered by a comprehensive database of verified government information, updated regularly to ensure accuracy.</p>
-
-                <h3>Technology</h3>
-                <p>GovHelp AI uses advanced artificial intelligence and natural language processing to understand your questions and provide relevant, helpful responses. The system learns and improves with each interaction, ensuring better service over time.</p>
-
-                <h3>Privacy & Security</h3>
-                <p>We take your privacy seriously. GovHelp AI does not collect personal information beyond what's necessary to provide the service. All interactions are encrypted and secure.</p>
-            </div>
-        </section>
-
-        <!-- Contact Section -->
-        <section id="contact" class="section">
-            <h2 class="section-title">Contact Us</h2>
-            <div class="about-content">
-                <h3>Get in Touch</h3>
-                <p>Have questions, suggestions, or feedback? We'd love to hear from you!</p>
-
-                <h3>📞 Contact Information</h3>
-                <ul>
-                    <li><strong>Helpline:</strong> +232 (0) 76 000 000</li>
-                    <li><strong>Email:</strong> info@govhelp.sl</li>
-                    <li><strong>Support Email:</strong> support@govhelp.sl</li>
-                    <li><strong>Office Hours:</strong> Monday - Friday, 8:00 AM - 5:00 PM</li>
-                </ul>
-
-                <h3>🏢 Physical Address</h3>
-                <p>
-                    GovHelp AI Office<br>
-                    Tower Hill, Freetown<br>
-                    Sierra Leone
-                </p>
-
-                <h3>🌐 Follow Us</h3>
-                <ul>
-                    <li><strong>Website:</strong> www.govhelp.sl</li>
-                    <li><strong>Facebook:</strong> @GovHelpSL</li>
-                    <li><strong>Twitter:</strong> @GovHelpSL</li>
-                    <li><strong>WhatsApp:</strong> +232 76 000 000</li>
-                </ul>
-
-                <h3>💬 Feedback</h3>
-                <p>Your feedback helps us improve our services. Please share your experience and suggestions with us at feedback@govhelp.sl</p>
-
-                <h3>🚨 Report Issues</h3>
-                <p>If you encounter any technical issues or incorrect information, please report them immediately at issues@govhelp.sl</p>
-            </div>
-        </section>
-    </main>
-
-    <!-- Footer -->
-    <footer class="footer">
-        <div class="footer-content">
-            <div class="footer-section">
-                <h3>About GovHelp AI</h3>
-                <p>Sierra Leone's premier digital government services portal, making government information accessible to all citizens.</p>
-            </div>
-            <div class="footer-section">
-                <h3>Quick Links</h3>
-                <ul>
-                    <li><a onclick="showSection('home')">Home</a></li>
-                    <li><a onclick="showSection('services')">Services</a></li>
-                    <li><a onclick="showSection('chatbot')">AI Assistant</a></li>
-                    <li><a onclick="showSection('about')">About Us</a></li>
-                </ul>
-            </div>
-            <div class="footer-section">
-                <h3>Services</h3>
-                <ul>
-                    <li><a onclick="openServiceChat('passport')">Passport Services</a></li>
-                    <li><a onclick="openServiceChat('drivers_license')">Driver's License</a></li>
-                    <li><a onclick="openServiceChat('nassit')">NASSIT</a></li>
-                    <li><a onclick="openServiceChat('birth_certificate')">Birth Certificates</a></li>
-                </ul>
-            </div>
-            <div class="footer-section">
-                <h3>Contact</h3>
-                <ul>
-                    <li>📞 +232 (0) 76 000 000</li>
-                    <li>✉️ info@govhelp.sl</li>
-                    <li>📍 Tower Hill, Freetown</li>
-                    <li>🇸🇱 Sierra Leone</li>
-                </ul>
-            </div>
-        </div>
-        <div class="footer-bottom">
-            <p>&copy; 2025 GovHelp AI. All rights reserved. | Serving the people of Sierra Leone</p>
-        </div>
-    </footer>
-
-    <script>
-        // ===== COMPLETE SERVICES DATABASE =====
-        const servicesData = {
-            "passport": {
-                "title": "Passport Services",
-                "emoji": "📘",
-                "location": ["Tower Hill, Freetown", "Bo Regional Office", "Kenema Regional Office", "Makeni Regional Office"],
-                "documents": ["National ID", "Birth Certificate", "2 Passport Photos", "Completed Application Form"],
-                "fees":
+/* ===================================
+   GovHelp AI - Complete Stylesheet
+   =================================== */
+
+@import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&display=swap');
+
+:root {
+    --navy-dark: #1e3a6f;
+    --navy-medium: #2d4a7c;
+    --navy-light: #3d5a8c;
+    --purple-gradient-start: #6b66ff;
+    --purple-gradient-end: #a855f7;
+    --white: #ffffff;
+    --gray-50: #f9fafb;
+    --gray-100: #f3f4f6;
+    --gray-200: #e5e7eb;
+    --gray-300: #d1d5db;
+    --gray-400: #9ca3af;
+    --gray-500: #6b7280;
+    --gray-600: #4b5563;
+    --gray-700: #374151;
+    --gray-800: #1f2937;
+    --gray-900: #111827;
+    --success: #10b981;
+    --info: #3b82f6;
+    --warning: #f59e0b;
+    --danger: #ef4444;
+    --shadow-sm: 0 1px 2px 0 rgba(0, 0, 0, 0.05);
+    --shadow-md: 0 4px 6px -1px rgba(0, 0, 0, 0.1);
+    --shadow-lg: 0 10px 15px -3px rgba(0, 0, 0, 0.1);
+    --shadow-xl: 0 20px 25px -5px rgba(0, 0, 0, 0.1);
+    --transition-fast: 0.15s ease;
+    --transition-base: 0.3s ease;
+    --transition-slow: 0.5s ease;
+}
+
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+html {
+    scroll-behavior: smooth;
+}
+
+body {
+    font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
+    line-height: 1.6;
+    color: var(--gray-800);
+    background-color: var(--white);
+    overflow-x: hidden;
+}
+
+.container {
+    max-width: 1200px;
+    margin: 0 auto;
+    padding: 0 20px;
+}
+
+/* Top Contact Bar */
+.top-bar {
+    background: var(--navy-dark);
+    color: var(--white);
+    padding: 12px 0;
+    font-size: 0.9rem;
+}
+
+.top-bar-content {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.contact-info span {
+    margin-right: 25px;
+}
+
+.contact-info i,
+.location-info i {
+    margin-right: 5px;
+    color: var(--purple-gradient-end);
+}
+
+/* Main Navigation */
+.main-nav {
+    background: var(--navy-medium);
+    padding: 20px 0;
+    position: sticky;
+    top: 0;
+    z-index: 1000;
+    box-shadow: var(--shadow-md);
+}
+
+.nav-wrapper {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.logo {
+    display: flex;
+    align-items: center;
+    gap: 15px;
+    color: var(--white);
+}
+
+.logo i {
+    font-size: 2.5rem;
+    color: var(--white);
+}
+
+.logo-text h1 {
+    font-size: 1.5rem;
+    font-weight: 700;
+    margin: 0;
+    line-height: 1.2;
+}
+
+.logo-text p {
+    font-size: 0.85rem;
+    opacity: 0.9;
+    margin: 0;
+}
+
+.nav-menu {
+    display: flex;
+    list-style: none;
+    gap: 5px;
+}
+
+.nav-link {
+    color: var(--white);
+    text-decoration: none;
+    padding: 10px 20px;
+    border-radius: 5px;
+    font-weight: 500;
+    transition: var(--transition-base);
+    position: relative;
+}
+
+.nav-link:hover {
+    background: rgba(255, 255, 255, 0.1);
+}
+
+.nav-link.active {
+    background: rgba(255, 255, 255, 0.15);
+    border-bottom: 3px solid var(--white);
+}
+
+.hamburger {
+    display: none;
+    flex-direction: column;
+    cursor: pointer;
+    gap: 5px;
+}
+
+.hamburger span {
+    width: 25px;
+    height: 3px;
+    background: var(--white);
+    border-radius: 3px;
+    transition: var(--transition-base);
+}
+
+/* Hero Section */
+.hero-section {
+    background: linear-gradient(135deg, var(--purple-gradient-start) 0%, var(--purple-gradient-end) 100%);
+    color: var(--white);
+    padding: 120px 0;
+    text-align: center;
+    position: relative;
+    overflow: hidden;
+}
+
+.hero-section::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background: url('data:image/svg+xml,<svg width="100" height="100" xmlns="http://www.w3.org/2000/svg"><rect width="100" height="100" fill="none"/><circle cx="50" cy="50" r="1" fill="rgba(255,255,255,0.1)"/></svg>');
+    opacity: 0.3;
+}
+
+.hero-content {
+    position: relative;
+    z-index: 1;
+}
+
+.hero-title {
+    font-size: 3rem;
+    font-weight: 800;
+    margin-bottom: 20px;
+    line-height: 1.2;
+    text-shadow: 0 2px 10px rgba(0, 0, 0, 0.2);
+}
+
+.hero-subtitle {
+    font-size: 1.25rem;
+    margin-bottom: 40px;
+    opacity: 0.95;
+    line-height: 1.6;
+}
+
+.cta-button {
+    background: var(--white);
+    color: var(--navy-dark);
+    padding: 18px 45px;
+    border: none;
+    border-radius: 50px;
+    font-size: 1.1rem;
+    font-weight: 600;
+    cursor: pointer;
+    transition: var(--transition-base);
+    box-shadow: 0 10px 30px rgba(0, 0, 0, 0.2);
+}
+
+.cta-button:hover {
+    transform: translateY(-3px);
+    box-shadow: 0 15px 40px rgba(0, 0, 0, 0.3);
+}
+
+/* Section Headers */
+.section-header {
+    text-align: center;
+    margin-bottom: 60px;
+}
+
+.section-title {
+    font-size: 2.5rem;
+    font-weight: 700;
+    color: var(--navy-dark);
+    margin-bottom: 10px;
+    position: relative;
+    display: inline-block;
+}
+
+.section-title::after {
+    content: '';
+    position: absolute;
+    bottom: -10px;
+    left: 0;
+    width: 100%;
+    height: 4px;
+    background: linear-gradient(90deg, var(--purple-gradient-start), var(--purple-gradient-end));
+    border-radius: 2px;
+}
+
+.section-subtitle {
+    font-size: 1.1rem;
+    color: var(--gray-600);
+    margin-top: 20px;
+}
+
+/* Services Section */
+.services-section {
+    padding: 100px 0;
+    background: var(--gray-50);
+}
+
+.services-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(320px, 1fr));
+    gap: 30px;
+}
+
+.service-card {
+    background: var(--white);
+    padding: 40px 30px;
+    border-radius: 15px;
+    box-shadow: var(--shadow-md);
+    transition: var(--transition-base);
+    cursor: pointer;
+    text-align: center;
+    border: 2px solid transparent;
+}
+
+.service-card:hover {
+    transform: translateY(-8px);
+    box-shadow: var(--shadow-xl);
+    border-color: var(--purple-gradient-start);
+}
+
+.service-icon {
+    width: 80px;
+    height: 80px;
+    margin: 0 auto 25px;
+    border-radius: 20px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 2.5rem;
+}
+
+.passport-icon {
+    background: linear-gradient(135deg, #4f46e5, #6366f1);
+    color: var(--white);
+}
+
+.license-icon {
+    background: linear-gradient(135deg, #dc2626, #ef4444);
+    color: var(--white);
+}
+
+.nassit-icon {
+    background: linear-gradient(135deg, #7c3aed, #8b5cf6);
+    color: var(--white);
+}
+
+.id-icon {
+    background: linear-gradient(135deg, #059669, #10b981);
+    color: var(--white);
+}
+
+.tax-icon {
+    background: linear-gradient(135deg, #d97706, #f59e0b);
+    color: var(--white);
+}
+
+.business-icon {
+    background: linear-gradient(135deg, #0891b2, #06b6d4);
+    color: var(--white);
+}
+
+.health-icon {
+    background: linear-gradient(135deg, #db2777, #ec4899);
+    color: var(--white);
+}
+
+.education-icon {
+    background: linear-gradient(135deg, #2563eb, #3b82f6);
+    color: var(--white);
+}
+
+.property-icon {
+    background: linear-gradient(135deg, #65a30d, #84cc16);
+    color: var(--white);
+}
+
+.service-card h3 {
+    font-size: 1.5rem;
+    color: var(--navy-dark);
+    margin-bottom: 15px;
+    font-weight: 600;
+}
+
+.service-card p {
+    color: var(--gray-600);
+    margin-bottom: 20px;
+    line-height: 1.6;
+}
+
+.learn-more {
+    color: var(--purple-gradient-start);
+    font-weight: 600;
+    display: inline-block;
+}
+
+.learn-more i {
+    margin-left: 5px;
+    transition: var(--transition-fast);
+}
+
+.service-card:hover .learn-more i {
+    transform: translateX(5px);
+}
+
+/* AI Assistant Section */
+.assistant-section {
+    padding: 100px 0;
+    background: var(--white);
+}
+
+.assistant-wrapper {
+    display: grid;
+    grid-template-columns: 1fr 1.2fr;
+    gap: 50px;
+    align-items: start;
+}
+
+.assistant-info h3 {
+    font-size: 2rem;
+    color: var(--navy-dark);
+    margin-bottom: 20px;
+}
+
+.assistant-info p {
+    color: var(--gray-600);
+    margin-bottom: 25px;
+    font-size: 1.1rem;
+}
+
+.features-list {
+    list-style: none;
+}
+
+.features-list li {
+    padding: 12px 0;
+    color: var(--gray-700);
+    font-size: 1.05rem;
+}
+
+.features-list i {
+    color: var(--success);
+    margin-right: 10px;
+}
+
+/* Chatbot Container */
+.chatbot-container {
+    background: var(--white);
+    border-radius: 20px;
+    box-shadow: var(--shadow-xl);
+    overflow: hidden;
+    border: 1px solid var(--gray-200);
+}
+
+.chatbot-header {
+    background: linear-gradient(135deg, var(--purple-gradient-start), var(--purple-gradient-end));
+    color: var(--white);
+    padding: 20px 25px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.header-info {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    font-weight: 600;
+    font-size: 1.1rem;
+}
+
+.header-info i {
+    font-size: 1.5rem;
+}
+
+.status-online {
+    font-size: 0.9rem;
+    display: flex;
+    align-items: center;
+    gap: 5px;
+}
+
+.status-online i {
+    color: var(--success);
+    font-size: 0.7rem;
+    animation: pulse 2s infinite;
+}
+
+@keyframes pulse {
+    0%, 100% { opacity: 1; }
+    50% { opacity: 0.5; }
+}
+
+.chatbot-messages {
+    height: 400px;
+    overflow-y: auto;
+    padding: 25px;
+    background: var(--gray-50);
+}
+
+.message {
+    display: flex;
+    margin-bottom: 20px;
+    align-items: flex-start;
+    gap: 12px;
+    animation: fadeInUp 0.3s ease;
+}
+
+@keyframes fadeInUp {
+    from {
+        opacity: 0;
+        transform: translateY(10px);
+    }
+    to {
+        opacity: 1;
+        transform: transl
